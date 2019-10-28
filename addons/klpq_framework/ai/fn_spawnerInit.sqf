@@ -236,7 +236,11 @@ kf_fnc_ai_infantryBunker = {
         _x setVariable ["kf_var_ai_buildingBunkered", true];
     } forEach _buildings;
 
-    if (count _positions == 0) exitWith {grpNull};
+    if (count _positions == 0) exitWith {
+        systemChat format ["No bunker positions found at %1", mapGridPosition _pos];
+
+        grpNull
+    };
 
     private _randomPositions = [];
 
