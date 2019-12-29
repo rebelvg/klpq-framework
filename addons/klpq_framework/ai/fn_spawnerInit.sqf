@@ -150,7 +150,7 @@ kf_fnc_ai_createGroup = {
 };
 
 kf_fnc_ai_createCrew = {
-    params ["_grp", "_veh", "_driver", "_crew", ["_isAirCrew", false], ["_skill", "LOW"]];
+    params ["_grp", "_veh", "_driver", "_crew", ["_isAirCrew", false], ["_skill", "LOW"], ["_turretPositions", 0.3]];
 
     if (_veh emptyPositions "driver" > 0) then
     {
@@ -171,8 +171,10 @@ kf_fnc_ai_createCrew = {
     };
 
     {
-        private _unit = [getPos _veh, _grp, _crew] call kf_fnc_ai_createUnit;
-        _unit moveInTurret [_veh, (_x select 3)];
+        if (_forEachIndex < _turretPositions * (count fullCrew [_veh, "turret", true])) then {
+            private _unit = [getPos _veh, _grp, _crew] call kf_fnc_ai_createUnit;
+            _unit moveInTurret [_veh, (_x select 3)];
+        }
     } forEach (fullCrew [_veh, "turret", true]);
 
     if (_isAirCrew) then {
@@ -286,7 +288,7 @@ kf_fnc_ai_infantryBunker = {
 };
 
 kf_fnc_ai_createVehicleGroup = {
-    params ["_pos", "_faction", "_vehicle", ["_skill", "LOW"]];
+    params ["_pos", "_faction", "_vehicle", ["_skill", "LOW"], ["_turretPositions", 0.3]];
 
     if (!isServer) exitWith {objNull};
 
@@ -307,23 +309,23 @@ kf_fnc_ai_createVehicleGroup = {
     private _side = [_crewUnit] call kf_fnc_ai_getSide;
 
     private _grp = createGroup _side;
-    [_grp, _veh, _crewUnit, _crewUnit, false, _skill] call kf_fnc_ai_createCrew;
+    [_grp, _veh, _crewUnit, _crewUnit, false, _skill, _turretPositions] call kf_fnc_ai_createCrew;
 
     _veh
 };
 
 kf_fnc_ai_createWheeledVehicleGroup = {
-    params ["_pos", "_faction", ["_skill", "LOW"]];
+    params ["_pos", "_faction", ["_skill", "LOW"], ["_turretPositions", 0.3]];
 
-    private _veh = [_pos, _faction, "wheeled", _skill] call kf_fnc_ai_createVehicleGroup;
+    private _veh = [_pos, _faction, "wheeled", _skill, _turretPositions] call kf_fnc_ai_createVehicleGroup;
 
     _veh
 };
 
 kf_fnc_ai_createArmoredVehicleGroup = {
-    params ["_pos", "_faction", ["_skill", "LOW"]];
+    params ["_pos", "_faction", ["_skill", "LOW"], ["_turretPositions", 0.3]];
 
-    private _veh = [_pos, _faction, "armored", _skill] call kf_fnc_ai_createVehicleGroup;
+    private _veh = [_pos, _faction, "armored", _skill, _turretPositions] call kf_fnc_ai_createVehicleGroup;
 
     _veh
 };
@@ -339,7 +341,7 @@ kf_fnc_ai_vehicleAttack = {
 };
 
 kf_fnc_ai_createAirVehicleGroup = {
-    params ["_pos", "_faction", ["_skill", "LOW"], ["_flyHeight", 100]];
+    params ["_pos", "_faction", ["_skill", "LOW"], ["_flyHeight", 100], ["_turretPositions", 0.3]];
 
     if (!isServer) exitWith {objNull};
 
@@ -360,7 +362,7 @@ kf_fnc_ai_createAirVehicleGroup = {
     private _side = [_pilotUnit] call kf_fnc_ai_getSide;
 
     private _grp = createGroup _side;
-    [_grp, _veh, _pilotUnit, _crewUnit, true, _skill] call kf_fnc_ai_createCrew;
+    [_grp, _veh, _pilotUnit, _crewUnit, true, _skill, _turretPositions] call kf_fnc_ai_createCrew;
 
     _veh flyInHeight _flyHeight;
 
