@@ -11,19 +11,11 @@ clearBackpackCargoGlobal _box;
 
 _box allowDamage false;
 
-if (ace_medical_level > 1) then {
-    _box addItemCargoGlobal ["ACE_fieldDressing", 1000];
-    _box addItemCargoGlobal ["ACE_quikclot", 1000];
-    _box addItemCargoGlobal ["ACE_morphine", 400];
-    _box addItemCargoGlobal ["ACE_epinephrine", 400];
-    _box addItemCargoGlobal ["ACE_tourniquet", 200];
-    _box addItemCargoGlobal ["ACE_personalAidKit", 200];
-    _box addItemCargoGlobal ["ACE_bloodIV_500", 200];
-} else {
-    _box addItemCargoGlobal ["ACE_fieldDressing", 2000];
-    _box addItemCargoGlobal ["ACE_morphine", 400];
-    _box addItemCargoGlobal ["ACE_epinephrine", 400];
-    _box addItemCargoGlobal ["ACE_bloodIV_500", 200];
-};
+_box addItemCargoGlobal ["ACE_fieldDressing", 2000];
+_box addItemCargoGlobal ["ACE_morphine", 400];
+_box addItemCargoGlobal ["ACE_splint", 400];
+_box addItemCargoGlobal ["ACE_epinephrine", 200];
+_box addItemCargoGlobal ["ACE_tourniquet", 100];
+_box addItemCargoGlobal ["ACE_bloodIV_500", 100];
 
 [_box] call mf_fnc_dynamicItems;
