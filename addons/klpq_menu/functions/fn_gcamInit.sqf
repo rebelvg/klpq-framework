@@ -636,7 +636,8 @@ gcam_fnc_perFrameEvent = {
     };
 
     if (serverCommandAvailable "#unlock") then {
-        KEYQUIT = 57;
+        // 57 === space key code
+        KEYQUIT = -57;
     } else {
         KEYQUIT = -57;
     };
